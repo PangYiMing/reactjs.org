@@ -158,7 +158,7 @@ render() {
 constructor(props)
 ```
 
-The constructor for a React component is called before it is mounted. When implementing the constructor for a `React.Component` subclass, you should call `super(props)` before any other statement. Otherwise, `this.props` will be undefined in the constructor, which can lead to bugs.
+这个 constructor 方法将会在 React组件 挂载前被调用。 当你实现 `React.Component` 子类的 constructor 时，你应该在做其他语句前调用 `super(props)` 。Otherwise, `this.props` will be undefined in the constructor, which can lead to bugs.
 
 Avoid introducing any side-effects or subscriptions in the constructor. For those use cases, use `componentDidMount()` instead.
 
@@ -201,11 +201,13 @@ Note that if a parent component causes your component to re-render, this method 
 UNSAFE_componentWillMount()
 ```
 
-`UNSAFE_componentWillMount()` is invoked just before mounting occurs. It is called before `render()`, therefore calling `setState()` synchronously in this method will not trigger an extra rendering. Generally, we recommend using the `constructor()` instead for initializing state.
+`UNSAFE_componentWillMount()` 在组件挂载前调用。它在`render（）`之前被调用，因此在这个方法中同步调用`setState（）`不会触发额外的渲染（render）。通常，我们建议使用`constructor（）`来代替初始化 state。
 
-Avoid introducing any side-effects or subscriptions in this method. For those use cases, use `componentDidMount()` instead.
+避免在此方法中引入 任何带有副作用当操作（例如，数据获取 或 动画）或订阅。对于这些用例，请改用`componentDidMount（）`。、
 
-This is the only lifecycle hook called on server rendering.
+
+这是在服务器渲染上调用的唯一生命周期钩子（This is the only lifecycle hook called on server rendering.）。
+
 
 > Note
 >
@@ -256,10 +258,9 @@ React doesn't call `UNSAFE_componentWillReceiveProps()` with initial props durin
 ```javascript
 shouldComponentUpdate(nextProps, nextState)
 ```
+使用 `shouldComponentUpdate()`让React知道组件的输出是否不受当前 state 或者 props变化的影响。默认行为是在每次 state 更改时重新渲染（render），在绝大多数情况下，您应该依赖默认行为。
 
-Use `shouldComponentUpdate()` to let React know if a component's output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
-
-`shouldComponentUpdate()` is invoked before rendering when new props or state are being received. Defaults to `true`. This method is not called for the initial render or when `forceUpdate()` is used.
+`shouldComponentUpdate()` 在接收新 props 或 state 时在渲染前被调用。默认为`true`。在初次渲染（render）使用`forceUpdate（）`时，不会调用此方法。
 
 Returning `false` does not prevent child components from re-rendering when *their* state changes.
 
